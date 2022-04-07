@@ -11,7 +11,15 @@ class BirdsController < ApplicationController
   def create
     bird = Bird.create(bird_params)
     render json: bird, status: :created
+  else
+    render json: {errors: bird.errors}, status: :unprocessable_entity
   end
+  # def create
+  #   bird = Bird.create!(bird_params)
+  #   render json: bird, status: :created
+  # rescue ActiveRecord::RecordInvalid => invalid
+  #   render json: { errors: invalid.record.errors }, status: :unprocessable_entity
+  # end
 
   # GET /birds/:id
   def show
@@ -25,6 +33,14 @@ class BirdsController < ApplicationController
     bird.update(bird_params)
     render json: bird
   end
+
+  # def update
+  #   bird = find_bird
+  #   bird.update!(bird_params)
+  #   render json: bird
+  # rescue ActiveRecord::RecordInvalid => invalid
+  #   render json: { errors: invalid.record.errors }, status: :unprocessable_entity
+  # end
 
   # DELETE /birds/:id
   def destroy
